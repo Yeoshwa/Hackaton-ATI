@@ -65,7 +65,11 @@ class MapReportsView(generics.ListAPIView):
 # Commentaires
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
+
+    def get_permissions(self):
+        if self.action == 'list' or self.action == 'retrieve':
+            return []  # Autorise tout le monde à lire
+        return [IsAuthenticated(), IsOwnerOrAdmin()]
 
     def get_queryset(self):
         report_id = self.kwargs['report_id']

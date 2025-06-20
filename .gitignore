@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.egg-info/
+
+# Django
+*.log
+db.sqlite3
+media/
+staticfiles/
+
+# Environnements virtuels
+.venv/
+venv/
+ENV/
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test & debug
+*.bak
+*.swp
+*.tmp
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Autres
+*.orig
+
+# Ignore test images
+Test/*.jpg
+Test/*.png

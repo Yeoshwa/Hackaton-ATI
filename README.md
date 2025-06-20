@@ -49,7 +49,7 @@ DELETE /api/reports/{id}/             # Supprimer un signalement (Admin ou auteu
 GET    /api/reports/map/              # **[HAUTE PRIORITÉ]** Retourne une liste légère de tous les signalements (id, lat, lng, statut)
 
 # Commentaires (Comments)
-GET    /api/reports/{report_id}/comments/  # Liste des commentaires d'un signalement
+GET    /api/reports/{report_id}/comments/  # Liste des commentaires d'un signalement (accessible à tous)
 POST   /api/reports/{report_id}/comments/  # Ajouter un commentaire (authentification requise)
 DELETE /api/comments/{id}/                 # Supprimer un commentaire (Admin ou auteur)
 ```
