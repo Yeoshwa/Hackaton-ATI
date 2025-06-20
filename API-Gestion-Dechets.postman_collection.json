@@ -1,0 +1,159 @@
+{
+  "info": {
+    "name": "API Gestion Dechets",
+    "description": "Collection Postman pour tester l'API de gestion participative des déchets.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Inscription",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"alice\",\n  \"email\": \"alice@example.com\",\n  \"password\": \"TestPass123\"\n}"
+        },
+        "url": { "raw": "http://127.0.0.1:8000/api/register/", "protocol": "http", "host": ["127.0.0.1"], "port": "8000", "path": ["api", "register", ""] }
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"alice\",\n  \"password\": \"TestPass123\"\n}"
+        },
+        "url": { "raw": "http://127.0.0.1:8000/api/login/", "protocol": "http", "host": ["127.0.0.1"], "port": "8000", "path": ["api", "login", ""] }
+      }
+    },
+    {
+      "name": "Voir son profil",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{access_token}}" }
+        ],
+        "url": { "raw": "http://127.0.0.1:8000/api/profile/", "protocol": "http", "host": ["127.0.0.1"], "port": "8000", "path": ["api", "profile", ""] }
+      }
+    },
+    {
+      "name": "Leaderboard",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://127.0.0.1:8000/api/users/leaderboard/", "protocol": "http", "host": ["127.0.0.1"], "port": "8000", "path": ["api", "users", "leaderboard", ""] }
+      }
+    },
+    {
+      "name": "Créer un signalement",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{access_token}}" }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            { "key": "latitude", "value": "48.85", "type": "text" },
+            { "key": "longitude", "value": "2.35", "type": "text" },
+            { "key": "photo", "type": "file" },
+            { "key": "description", "value": "Tas de déchets près du parc", "type": "text" },
+            { "key": "statut", "value": "signale", "type": "text" },
+            { "key": "gravite", "value": "2", "type": "text" }
+          ]
+        },
+        "url": { "raw": "http://127.0.0.1:8000/api/reports/", "protocol": "http", "host": ["127.0.0.1"], "port": "8000", "path": ["api", "reports", ""] }
+      }
+    },
+    {
+      "name": "Lister les signalements",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://127.0.0.1:8000/api/reports/", "protocol": "http", "host": ["127.0.0.1"], "port": "8000", "path": ["api", "reports", ""] }
+      }
+    },
+    {
+      "name": "Détail d'un signalement",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://127.0.0.1:8000/api/reports/1/", "protocol": "http", "host": ["127.0.0.1"], "port": "8000", "path": ["api", "reports", "1", ""] }
+      }
+    },
+    {
+      "name": "Modifier un signalement",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{access_token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"statut\": \"nettoye\"\n}"
+        },
+        "url": { "raw": "http://127.0.0.1:8000/api/reports/1/", "protocol": "http", "host": ["127.0.0.1"], "port": "8000", "path": ["api", "reports", "1", ""] }
+      }
+    },
+    {
+      "name": "Supprimer un signalement",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{access_token}}" }
+        ],
+        "url": { "raw": "http://127.0.0.1:8000/api/reports/1/", "protocol": "http", "host": ["127.0.0.1"], "port": "8000", "path": ["api", "reports", "1", ""] }
+      }
+    },
+    {
+      "name": "Endpoint carte",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://127.0.0.1:8000/api/reports/map/", "protocol": "http", "host": ["127.0.0.1"], "port": "8000", "path": ["api", "reports", "map", ""] }
+      }
+    },
+    {
+      "name": "Lister les commentaires d'un signalement",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://127.0.0.1:8000/api/reports/1/comments/", "protocol": "http", "host": ["127.0.0.1"], "port": "8000", "path": ["api", "reports", "1", "comments", ""] }
+      }
+    },
+    {
+      "name": "Ajouter un commentaire",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{access_token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"content\": \"Merci d'avoir signalé, j'irai voir !\"\n}"
+        },
+        "url": { "raw": "http://127.0.0.1:8000/api/reports/1/comments/", "protocol": "http", "host": ["127.0.0.1"], "port": "8000", "path": ["api", "reports", "1", "comments", ""] }
+      }
+    },
+    {
+      "name": "Supprimer un commentaire",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{access_token}}" }
+        ],
+        "url": { "raw": "http://127.0.0.1:8000/api/comments/1/", "protocol": "http", "host": ["127.0.0.1"], "port": "8000", "path": ["api", "comments", "1", ""] }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "access_token",
+      "value": ""
+    }
+  ]
+} 

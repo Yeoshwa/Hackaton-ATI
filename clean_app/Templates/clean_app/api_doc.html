@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Documentation API - Gestion Participative des Déchets</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; }
+        h1, h2, h3 { color: #2c3e50; }
+        code, pre { background: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 2em; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background: #eee; }
+    </style>
+</head>
+<body>
+    <h1>📚 Documentation de l’API – Gestion Participative des Déchets</h1>
+    <h2>Introduction</h2>
+    <p>Cette API permet de signaler, visualiser et commenter des dépôts de déchets dans la ville, tout en gérant l’authentification, la gamification (points), et l’administration des utilisateurs et signalements.</p>
+    <h2>Authentification</h2>
+    <ul>
+        <li><b>JWT (JSON Web Token)</b> : Toutes les routes protégées nécessitent un token JWT dans l’en-tête <code>Authorization: Bearer &lt;token&gt;</code>.</li>
+    </ul>
+    <h3>Endpoints</h3>
+    <table>
+        <tr><th>Méthode</th><th>URL</th><th>Description</th><th>Auth</th></tr>
+        <tr><td>POST</td><td>/api/register/</td><td>Créer un compte utilisateur</td><td>❌</td></tr>
+        <tr><td>POST</td><td>/api/login/</td><td>Obtenir un token JWT</td><td>❌</td></tr>
+        <tr><td>POST</td><td>/api/token/refresh/</td><td>Rafraîchir un token JWT</td><td>❌</td></tr>
+        <tr><td>GET</td><td>/api/profile/</td><td>Voir son profil</td><td>✔️</td></tr>
+        <tr><td>GET</td><td>/api/users/leaderboard/</td><td>Classement des top contributeurs</td><td>❌</td></tr>
+    </table>
+    <h3>Exemple d’inscription</h3>
+    <pre><code>POST /api/register/
+{
+  "username": "alice",
+  "email": "alice@example.com",
+  "password": "TestPass123"
+}</code></pre>
+    <h3>Exemple de login</h3>
+    <pre><code>POST /api/login/
+{
+  "username": "alice",
+  "password": "TestPass123"
+}</code></pre>
+    <pre><code>{
+  "refresh": "&lt;refresh_token&gt;",
+  "access": "&lt;access_token&gt;"
+}</code></pre>
+    <h2>Signalements (Reports)</h2>
+    <table>
+        <tr><th>Méthode</th><th>URL</th><th>Description</th><th>Auth</th></tr>
+        <tr><td>GET</td><td>/api/reports/</td><td>Liste des signalements (filtrable)</td><td>❌</td></tr>
+        <tr><td>POST</td><td>/api/reports/</td><td>Créer un signalement (anonyme ou connecté)</td><td>❌/✔️</td></tr>
+        <tr><td>GET</td><td>/api/reports/{id}/</td><td>Détail d’un signalement</td><td>❌</td></tr>
+        <tr><td>PATCH</td><td>/api/reports/{id}/</td><td>Modifier un signalement (auteur/admin)</td><td>✔️</td></tr>
+        <tr><td>DELETE</td><td>/api/reports/{id}/</td><td>Supprimer un signalement (auteur/admin)</td><td>✔️</td></tr>
+        <tr><td>GET</td><td>/api/reports/map/</td><td>Liste légère pour carte</td><td>❌</td></tr>
+    </table>
+    <h3>Exemple de création de signalement</h3>
+    <pre><code>POST /api/reports/
+Content-Type: multipart/form-data
+
+{
+  "latitude": 48.85,
+  "longitude": 2.35,
+  "photo": &lt;fichier image&gt;,
+  "description": "Tas de déchets près du parc",
+  "statut": "signale",
+  "gravite": 2
+}</code></pre>
+    <h2>Commentaires</h2>
+    <table>
+        <tr><th>Méthode</th><th>URL</th><th>Description</th><th>Auth</th></tr>
+        <tr><td>GET</td><td>/api/reports/{report_id}/comments/</td><td>Liste des commentaires d’un signalement</td><td>❌</td></tr>
+        <tr><td>POST</td><td>/api/reports/{report_id}/comments/</td><td>Ajouter un commentaire</td><td>✔️</td></tr>
+        <tr><td>DELETE</td><td>/api/comments/{id}/</td><td>Supprimer un commentaire (auteur/admin)</td><td>✔️</td></tr>
+    </table>
+    <h2>Gamification</h2>
+    <ul>
+        <li>+5 points pour chaque signalement créé</li>
+        <li>+2 points pour chaque commentaire créé</li>
+        <li>Classement : <code>/api/users/leaderboard/</code> (top 10 par points)</li>
+    </ul>
+    <h2>Sécurité & Permissions</h2>
+    <ul>
+        <li>Création de commentaire : Authentification requise</li>
+        <li>Modification/Suppression de report/comment : Auteur ou admin</li>
+        <li>Consultation et création de report : Ouvert à tous (anonyme possible)</li>
+        <li>CORS : Toutes les origines autorisées (pour développement/hackathon)</li>
+    </ul>
+    <h2>Modèles de données (schéma simplifié)</h2>
+    <pre><code>
+Utilisateur (User + UserProfile)
+- username (string)
+- email (string)
+- password (hashé)
+- statut (string : citoyen/admin)
+- points (int)
+
+Signalement (Report)
+- user (nullable)
+- latitude (float)
+- longitude (float)
+- photo (image)
+- description (texte)
+- statut (string : signale/en_cours/nettoye)
+- gravite (int : 1/2/3)
+- created_at (datetime)
+
+Commentaire (Comment)
+- user (User)
+- report (Report)
+- content (texte)
+- created_at (datetime)
+    </code></pre>
+    <h2>Administration</h2>
+    <p>Interface Django admin pour gérer utilisateurs, signalements, commentaires, avec affichage en colonnes de tous les champs importants.</p>
+    <h2>Notes</h2>
+    <ul>
+        <li>Pour la production, restreindre CORS à l’URL de ton frontend.</li>
+        <li>Pour toute modification/suppression, le token JWT de l’auteur ou d’un admin est requis.</li>
+        <li>L’upload d’image doit se faire en <code>multipart/form-data</code>.</li>
+    </ul>
+</body>
+</html>
