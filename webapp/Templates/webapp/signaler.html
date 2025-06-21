@@ -6,7 +6,6 @@
     <h1>Signaler un problème</h1>
     <nav>
         <ul>
-            <li><a href="{% url 'carte' %}">Carte</a></li>
             <li><a href="{% url 'classement' %}">Classement</a></li>
             <li><a href="{% url 'evenements' %}">Événements</a></li>
         </ul>
@@ -14,12 +13,19 @@
 </header>
 {% endblock %}
 {% block content %}
-{% if success %}
-    <div style="color: green;">Signalement envoyé avec succès !</div>
-{% endif %}
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Envoyer le signalement</button>
-</form>
+<div style="display: flex; align-items: flex-start; gap: 40px; max-width: 900px; margin: 0 auto;">
+    <div style="flex: 1; min-width: 320px;">
+        {% if success %}
+            <div style="color: green; margin-bottom: 18px;">Signalement envoyé avec succès !</div>
+        {% endif %}
+        <form method="post" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 16px; background: #fff; border-radius: 18px; box-shadow: 0 2px 16px #0001; padding: 32px 24px;">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" style="background: #4CAF50; color: #fff; border: none; border-radius: 8px; padding: 14px 0; font-size: 1.1em; font-weight: 700; cursor: pointer; transition: background 0.2s;">Envoyer le signalement</button>
+        </form>
+    </div>
+    <div style="flex: 1; min-width: 260px; display: flex; align-items: center; justify-content: center;">
+        <img src="{% static 'images/sigaler.jpeg' %}" alt="Signaler un problème" style="max-width: 320px; width: 100%; border-radius: 18px; box-shadow: 0 2px 16px #0001; background: #f6f6f6; padding: 24px;" />
+    </div>
+</div>
 {% endblock %}

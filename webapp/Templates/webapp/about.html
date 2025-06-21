@@ -1,0 +1,126 @@
+{% extends 'webapp/base.html' %}
+{% load static %}
+
+{% block title %}Accueil - Clean-CITY{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section id="hero" class="hero-section">
+    <div class="container hero-grid">
+        <div class="hero-text">
+            <h1 class="hero-title">Agissez pour une ville plus propre</h1>
+            <p class="hero-subtitle">Signalez, partagez, améliorez votre environnement urbain avec Clean-CITY. Ensemble, faisons la différence !</p>
+            <a href="#features" class="cta-btn hero-btn">Découvrir la plateforme</a>
+        </div>
+        <div class="hero-img">
+            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80" alt="Ville propre" />
+        </div>
+    </div>
+</section>
+
+<!-- Fonctionnalités (Bento Box) -->
+<section id="features" class="features-section">
+    <div class="container">
+        <h2 class="section-title">Fonctionnalités clés</h2>
+        <div class="bento-grid">
+            <div class="bento-box">
+                <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="Signaler un problème">
+                <h3>Signalement instantané</h3>
+                <p>Photographiez et localisez un problème de propreté en quelques secondes, où que vous soyez.</p>
+            </div>
+            <div class="bento-box">
+                <img src="https://cdn-icons-png.flaticon.com/512/854/854878.png" alt="Carte interactive">
+                <h3>Carte interactive</h3>
+                <p>Visualisez tous les signalements sur une carte claire et suivez l’évolution de la propreté urbaine.</p>
+            </div>
+            <div class="bento-box">
+                <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" alt="Communauté">
+                <h3>Communauté engagée</h3>
+                <p>Rejoignez des citoyens motivés et participez à des actions collectives pour votre quartier.</p>
+            </div>
+            <div class="bento-box">
+                <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Statistiques">
+                <h3>Statistiques d’impact</h3>
+                <p>Suivez vos contributions et l’impact global de la communauté en temps réel.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- À propos -->
+<section id="about" class="about-section">
+    <div class="container about-content">
+        <h2 class="section-title">À propos de Clean-CITY</h2>
+        <p>
+            Clean-CITY est une initiative citoyenne et technologique dédiée à la propreté urbaine. Notre mission : donner à chacun le pouvoir d’agir pour un environnement plus sain. Nous croyons en la force du collectif, à la transparence des actions et à l’innovation pour transformer nos villes. Rejoignez-nous pour bâtir ensemble un futur plus vert, plus propre et plus solidaire !
+        </p>
+    </div>
+</section>
+
+<!-- Statistiques d'impact -->
+<section class="stats-section">
+    <div class="container stats-grid">
+        <div class="stat-box">
+            <span class="stat-number">+500</span>
+            <span class="stat-label">Utilisateurs actifs</span>
+        </div>
+        <div class="stat-box">
+            <span class="stat-number">+300</span>
+            <span class="stat-label">Signalements</span>
+        </div>
+        <div class="stat-box">
+            <span class="stat-number">+50</span>
+            <span class="stat-label">Événements organisés</span>
+        </div>
+        <div class="stat-box">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Fun garanti !</span>
+        </div>
+    </div>
+</section>
+
+<!-- Témoignages -->
+<section class="testimonials-section">
+    <div class="container">
+        <h2 class="section-title">Ils en parlent mieux que nous</h2>
+        <div class="bento-grid">
+            <div class="bento-box testimonial">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Photo utilisateur">
+                <p class="testimonial-text">“Grâce à Clean-CITY, j’ai pu signaler un dépôt sauvage près de chez moi. L’intervention a été rapide et efficace !”</p>
+                <span class="testimonial-name">Julien, Paris</span>
+            </div>
+            <div class="bento-box testimonial">
+                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Photo utilisatrice">
+                <p class="testimonial-text">“La carte interactive est super pratique pour suivre l’évolution de la propreté dans mon quartier.”</p>
+                <span class="testimonial-name">Sophie, Lyon</span>
+            </div>
+            <div class="bento-box testimonial">
+                <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Photo utilisateur">
+                <p class="testimonial-text">“J’adore participer aux événements de nettoyage, c’est convivial et utile !”</p>
+                <span class="testimonial-name">Lucas, Marseille</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="contact-section">
+    <div class="container contact-grid">
+        <div class="contact-info">
+            <h2 class="section-title">Contactez-nous</h2>
+            <p>Une question, une suggestion ou envie de rejoindre l’aventure ? Écrivez-nous !</p>
+            <ul class="contact-list">
+                <li><strong>Email :</strong> contact@cleancity.fr</li>
+                <li><strong>Téléphone :</strong> 01 23 45 67 89</li>
+                <li><strong>Adresse :</strong> 42 avenue du Futur, 75000 Paris</li>
+            </ul>
+        </div>
+        <form class="contact-form">
+            <input type="text" placeholder="Votre nom" required>
+            <input type="email" placeholder="Votre email" required>
+            <textarea placeholder="Votre message" required></textarea>
+            <button type="submit" class="cta-btn">Envoyer</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

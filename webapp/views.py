@@ -10,25 +10,22 @@ from .forms_userprofile import UserProfileForm
 
 
 
-def generate_map(reports):
+def generate_map(reports, center_lat=None, center_lon=None):
     # Permet de prendre en entrée une liste d'objets Report ou de dictionnaires
-    if not reports:
-        return None
-
-    # Supporte à la fois objets et dicts
     def get_attr(report, attr):
         if isinstance(report, dict):
             return report.get(attr)
         return getattr(report, attr, None)
 
-    # Centrer la carte sur Kinshasa par défaut
+    # Toujours centrer sur Kinshasa par défaut, sauf si coordonnées utilisateur fournies
     default_lat, default_lon = -4.325, 15.322
-    if reports:
-        avg_lat = sum(get_attr(r, 'latitude') for r in reports) / len(reports)
-        avg_lon = sum(get_attr(r, 'longitude') for r in reports) / len(reports)
+    if center_lat is not None and center_lon is not None:
+        avg_lat, avg_lon = center_lat, center_lon
+        zoom = 16  # Zoom plus élevé pour voir les rues de Kinshasa
     else:
         avg_lat, avg_lon = default_lat, default_lon
-    m = folium.Map(location=[avg_lat, avg_lon], zoom_start=12)
+        zoom = 15  # Zoom plus élevé pour Kinshasa
+    m = folium.Map(location=[avg_lat, avg_lon], zoom_start=zoom)
 
     # Create a marker cluster
     marker_cluster = MarkerCluster().add_to(m)
@@ -56,14 +53,25 @@ def generate_map(reports):
 
     return m
 # Create your views here.
-def index(request):
-    return render(request, 'webapp/index.html')
+def about(request):
+    return render(request, 'webapp/about.html')
 
 def carte(request):
     reports = Report.objects.all()
-    
+    # Récupérer les coordonnées de l'utilisateur si transmises en GET
+    lat = request.GET.get('lat')
+    lon = request.GET.get('lon')
+    if lat and lon:
+        try:
+            lat = float(lat)
+            lon = float(lon)
+        except ValueError:
+            lat = lon = None
+    else:
+        lat = lon = None
+
     if reports:
-        folium_map = generate_map(reports)
+        folium_map = generate_map(reports, center_lat=lat, center_lon=lon)
         map_html = folium_map._repr_html_()
     else:
         map_html = "<p>Aucun signalement disponible.</p>"

@@ -18,24 +18,33 @@
 <br>
 <hr>
 {% block content %} 
-<h2>Classement des Acteurs</h2>
-<div class="classement-container">
-    {% for profil in profils %}
-    <div class="user-card">
-        <div class="user-img">
-            <img src="{% static 'images/default-user.png' %}" alt="User Image">
-        </div>
-        <div class="user-info">
-            <h3>{{ forloop.counter }}. {{ profil.user.username }}</h3>
-            <p>Statut : {{ profil.get_statut_display }}</p>
-            <p>Points : {{ profil.points }}</p>
-            <a href="{% url 'modifier_userprofile' profil.user.id %}" class="btn btn-warning">Modifier</a>
-            <a href="{% url 'supprimer_userprofile' profil.user.id %}" class="btn btn-danger">Supprimer</a>
-        </div>
-    </div>
-    {% empty %}
-    <p>Aucun contributeur enregistré.</p>
-    {% endfor %}
+<h1 class="text-2xl font-bold mb-2">Classement des acteurs</h1>
+<p class="text-gray-500 mb-6">Découvrez les citoyens et équipes les plus engagés</p>
+<div class="bg-white rounded-xl shadow p-8">
+    <table class="w-full text-left">
+        <thead>
+            <tr class="border-b">
+                <th class="py-2">#</th>
+                <th class="py-2">Nom</th>
+                <th class="py-2">Points</th>
+                <th class="py-2">Niveau</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for profil in profils %}
+            <tr class="border-b hover:bg-gray-50">
+                <td class="py-2 font-bold text-green-600">{{ forloop.counter }}</td>
+                <td class="py-2">{{ profil.user.username }}</td>
+                <td class="py-2">{{ profil.points }}</td>
+                <td class="py-2">{{ profil.get_statut_display }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="py-2 text-center">Aucun contributeur enregistré.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 <style>
