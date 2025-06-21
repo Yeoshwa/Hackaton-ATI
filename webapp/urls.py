@@ -12,4 +12,6 @@ urlpatterns = [
     path('api/', include('webapp.api_urls')),  # Ajout de l'API CRUD pour Event
     path('evenements/<int:id>/modifier/', views.modifier_evenement, name='modifier_evenement'),
     path('evenements/<int:id>/supprimer/', views.supprimer_evenement, name='supprimer_evenement'),
+    path('classement/<int:user_id>/modifier/', views.modifier_userprofile, name='modifier_userprofile'),
+    path('classement/<int:user_id>/supprimer/', views.supprimer_userprofile, name='supprimer_userprofile'),
 ]

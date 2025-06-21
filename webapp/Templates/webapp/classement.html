@@ -19,7 +19,6 @@
 <hr>
 {% block content %} 
 <h2>Classement des Acteurs</h2>
-<a href="#" class="btn btn-success">Ajouter un utilisateur</a>
 <div class="classement-container">
     {% for profil in profils %}
     <div class="user-card">
@@ -30,8 +29,8 @@
             <h3>{{ forloop.counter }}. {{ profil.user.username }}</h3>
             <p>Statut : {{ profil.get_statut_display }}</p>
             <p>Points : {{ profil.points }}</p>
-            <a href="#" class="btn btn-warning">Modifier</a>
-            <a href="#" class="btn btn-danger">Supprimer</a>
+            <a href="{% url 'modifier_userprofile' profil.user.id %}" class="btn btn-warning">Modifier</a>
+            <a href="{% url 'supprimer_userprofile' profil.user.id %}" class="btn btn-danger">Supprimer</a>
         </div>
     </div>
     {% empty %}

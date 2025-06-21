@@ -6,6 +6,7 @@ from folium.plugins import MarkerCluster
 from .models import Event
 from .forms import ReportForm
 from .forms_event import EventForm
+from .forms_userprofile import UserProfileForm
 
 
 
@@ -20,8 +21,13 @@ def generate_map(reports):
             return report.get(attr)
         return getattr(report, attr, None)
 
-    avg_lat = sum(get_attr(r, 'latitude') for r in reports) / len(reports)
-    avg_lon = sum(get_attr(r, 'longitude') for r in reports) / len(reports)
+    # Centrer la carte sur Kinshasa par défaut
+    default_lat, default_lon = -4.325, 15.322
+    if reports:
+        avg_lat = sum(get_attr(r, 'latitude') for r in reports) / len(reports)
+        avg_lon = sum(get_attr(r, 'longitude') for r in reports) / len(reports)
+    else:
+        avg_lat, avg_lon = default_lat, default_lon
     m = folium.Map(location=[avg_lat, avg_lon], zoom_start=12)
 
     # Create a marker cluster
@@ -36,7 +42,12 @@ def generate_map(reports):
         photo = get_attr(report, 'photo')
         popup_html = f"<b>{desc}</b> - {statut}"
         if photo:
-            popup_html += f'<br><img src="{photo}" width="150">'
+            # Correction du chemin de l'image pour MEDIA_URL
+            if hasattr(photo, 'url'):
+                photo_url = photo.url
+            else:
+                photo_url = f"/media/{photo}"
+            popup_html += f'<br><img src="{photo_url}" width="150">'
         folium.Marker(
             location=[lat, lon],
             popup=folium.Popup(popup_html, max_width=250),
@@ -116,3 +127,21 @@ def supprimer_evenement(request, id):
         event.delete()
         return redirect('evenements')
     return render(request, 'webapp/supprimer_evenement.html', {'event': event})
+
+def modifier_userprofile(request, user_id):
+    profil = get_object_or_404(UserProfile, user__id=user_id)
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=profil)
+        if form.is_valid():
+            form.save()
+            return redirect('classement')
+    else:
+        form = UserProfileForm(instance=profil)
+    return render(request, 'webapp/modifier_userprofile.html', {'form': form, 'profil': profil})
+
+def supprimer_userprofile(request, user_id):
+    profil = get_object_or_404(UserProfile, user__id=user_id)
+    if request.method == 'POST':
+        profil.delete()
+        return redirect('classement')
+    return render(request, 'webapp/supprimer_userprofile.html', {'profil': profil})
