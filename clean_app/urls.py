@@ -14,4 +14,5 @@ urlpatterns = [
     path('comments/<int:pk>/', CommentDeleteView.as_view(), name='comment-delete'),
     path('', include(router.urls)),
     path('documentation/', api_doc_view, name='api-doc'),
+    path('api/', include('clean_app.api_urls')),  # Ajout CRUD API pour Report, Comment, UserProfile
 ]

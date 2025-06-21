@@ -6,10 +6,13 @@ from django.conf.urls.static import static
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from webapp import  views
 
 urlpatterns = [
+    path("", views.index, name="index"),  # Assuming webapp.views.index is defined
     path('admin/', admin.site.urls),
-    path('api/', include('clean_app.urls'))
+    path('api/', include('clean_app.urls')),
+    path("webapp/", include('webapp.urls')), # Assuming webapp.urls contains the necessary URL patterns
 ]
 
 urlpatterns += [

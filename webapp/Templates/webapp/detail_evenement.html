@@ -1,0 +1,33 @@
+{% extends 'webapp/base.html' %}
+{% block title %}Détail de l'Événement{% endblock %}
+{% block header %}
+<header>
+    <h1>{{ event.titre }}</h1>
+    <nav>
+        <ul>
+            <li><a href="{% url 'evenements' %}">Retour à la liste</a></li>
+        </ul>
+    </nav>
+</header>
+{% endblock %}
+{% block content %}
+<p><strong>Date :</strong> {{ event.date|date:'d/m/Y H:i' }}</p>
+<p><strong>Lieu :</strong> {{ event.lieu }}</p>
+<p><strong>Description :</strong> {{ event.description }}</p>
+<p><strong>Organisateur :</strong> {{ event.organisateur.username }}</p>
+<p><strong>Participants :</strong> {{ event.participants.count }} inscrit(s)</p>
+<ul>
+    {% for user in event.participants.all %}
+    <li>{{ user.username }}</li>
+    {% empty %}
+    <li>Aucun participant pour le moment.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'modifier_evenement' event.id %}" class="btn btn-warning">Modifier</a>
+<a href="{% url 'supprimer_evenement' event.id %}" class="btn btn-danger">Supprimer</a>
+{% endblock %}
+<style>
+.btn { display:inline-block; margin-left:10px; padding:2px 8px; border-radius:4px; text-decoration:none; }
+.btn-warning { background:#ffc107; color:#222; }
+.btn-danger { background:#dc3545; color:#fff; }
+</style>

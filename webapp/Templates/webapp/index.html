@@ -1,0 +1,22 @@
+{% extends 'webapp/base.html'%}
+
+{% block title%}Accueil{% endblock %}
+{% block header %}
+<header>
+    <h1>Clean-CITY</h1>
+    <nav>
+        <ul>
+            <li><a href="{% url 'carte' %}">Carte</a></li>
+            <li><a href="{% url 'signaler' %}">Signaler</a></li>
+            <li><a href="{% url 'classement' %}">Acteurs</a></li>
+            <li><a href="{% url 'evenements' %}">Evenement</a></li>
+            {% comment %} <li><a href="{% url 'Login' %}">Se connecter </a></li> {% endcomment %}
+        </ul>
+    </nav>
+{% endblock %}
+{% block content %}
+ <h1> Welcome to Clean-CITY! </h1>
+<h2>Application de gestion des déchets</h2>
+<p>Clean-CITY est une application de gestion des déchets qui vous permet de signaler les problèmes liés aux déchets dans votre ville.</p>
+
+{% endblock %}

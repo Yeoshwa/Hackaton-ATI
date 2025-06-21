@@ -17,7 +17,11 @@ class ProfileView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
-        return self.request.user.userprofile
+        try:
+            return self.request.user.userprofile
+        except UserProfile.DoesNotExist:
+            from rest_framework.exceptions import NotFound
+            raise NotFound({'error': 'Profil introuvable'})
 
 # Classement utilisateurs par points
 class LeaderboardView(generics.ListAPIView):
@@ -33,11 +37,12 @@ class ReportViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         user = self.request.user if self.request.user.is_authenticated else None
+        if not user:
+            return Response({'error': 'Authentification requise'}, status=401)
         report = serializer.save(user=user)
-        if user:
-            profile = user.userprofile
-            profile.points += 5  # Par exemple, 5 points par report
-            profile.save()
+        profile = user.userprofile
+        profile.points += 5  # Par exemple, 5 points par report
+        profile.save()
 
     def get_permissions(self):
         if self.action in ['update', 'partial_update', 'destroy']:
@@ -73,11 +78,17 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         report_id = self.kwargs['report_id']
+        if not Report.objects.filter(id=report_id).exists():
+            from rest_framework.exceptions import NotFound
+            raise NotFound({'error': 'Signalement introuvable'})
         return Comment.objects.filter(report__id=report_id).order_by('-created_at')
 
     def perform_create(self, serializer):
         report_id = self.kwargs['report_id']
-        report = Report.objects.get(id=report_id)
+        try:
+            report = Report.objects.get(id=report_id)
+        except Report.DoesNotExist:
+            return Response({'error': 'Signalement introuvable'}, status=404)
         comment = serializer.save(user=self.request.user, report=report)
         profile = self.request.user.userprofile
         profile.points += 2  # Par exemple, 2 points par commentaire

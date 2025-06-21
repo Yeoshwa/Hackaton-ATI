@@ -1,0 +1,80 @@
+{% extends 'webapp/base.html' %}
+{% load static %}
+
+{% block title %}Classement des Acteurs{% endblock %}
+
+{% block header %}
+<header>
+    <h1>Classement des Acteurs</h1>
+    <nav>
+        <ul>
+            <li><a href="{% url 'carte' %}">Carte</a></li>
+            <li><a href="{% url 'signaler' %}">Signaler</a></li>
+            <li><a href="{% url 'evenements' %}">Événements</a></li>
+        </ul>
+    </nav>
+</header>
+{% endblock %}
+<br>
+<hr>
+{% block content %} 
+<h2>Classement des Acteurs</h2>
+<a href="#" class="btn btn-success">Ajouter un utilisateur</a>
+<div class="classement-container">
+    {% for profil in profils %}
+    <div class="user-card">
+        <div class="user-img">
+            <img src="{% static 'images/default-user.png' %}" alt="User Image">
+        </div>
+        <div class="user-info">
+            <h3>{{ forloop.counter }}. {{ profil.user.username }}</h3>
+            <p>Statut : {{ profil.get_statut_display }}</p>
+            <p>Points : {{ profil.points }}</p>
+            <a href="#" class="btn btn-warning">Modifier</a>
+            <a href="#" class="btn btn-danger">Supprimer</a>
+        </div>
+    </div>
+    {% empty %}
+    <p>Aucun contributeur enregistré.</p>
+    {% endfor %}
+</div>
+
+<style>
+.classement-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.user-card {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.user-img img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.user-info h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.user-info p {
+    margin: 2px 0;
+}
+
+.btn { display:inline-block; margin-left:10px; padding:2px 8px; border-radius:4px; text-decoration:none; }
+.btn-success { background:#28a745; color:#fff; }
+.btn-warning { background:#ffc107; color:#222; }
+.btn-danger { background:#dc3545; color:#fff; }
+</style>
+
+{% endblock %}

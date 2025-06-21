@@ -1,0 +1,25 @@
+{% extends 'webapp/base.html' %}
+{% load static %}
+{% block title %}Signaler un problème{% endblock %}
+{% block header %}
+<header>
+    <h1>Signaler un problème</h1>
+    <nav>
+        <ul>
+            <li><a href="{% url 'carte' %}">Carte</a></li>
+            <li><a href="{% url 'classement' %}">Classement</a></li>
+            <li><a href="{% url 'evenements' %}">Événements</a></li>
+        </ul>
+    </nav>
+</header>
+{% endblock %}
+{% block content %}
+{% if success %}
+    <div style="color: green;">Signalement envoyé avec succès !</div>
+{% endif %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Envoyer le signalement</button>
+</form>
+{% endblock %}
