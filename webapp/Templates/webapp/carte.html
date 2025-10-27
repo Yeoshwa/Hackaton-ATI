@@ -3,17 +3,24 @@
 {% block title %}Carte des Signalements{% endblock %}
 
 {% block header %}
-<nav style="background:#e3e3e3;padding:10px 0 10px 20px;">
-    <a href="/" style="margin-right:20px;">Accueil</a>
-    <a href="/webapp/signaler/" style="margin-right:20px;">Signaler</a>
-    <a href="/webapp/classement/" style="margin-right:20px;">Classement</a>
-    <a href="/webapp/evenements/">Événements</a>
-</nav>
+<header>
+    <h1>Carte des Signalements</h1>
+    <nav>
+        <ul style="list-style:none; margin:0; padding:0; display:flex; justify-content:center; gap:18px;">
+            <li><a href="/">Accueil</a></li>
+            <li><a href="/webapp/signaler/">Signaler</a></li>
+            <li><a href="/webapp/classement/">Classement</a></li>
+            <li><a href="/webapp/evenements/">Événements</a></li>
+        </ul>
+    </nav>
+</header>
 {% endblock %}
 
 {% block content %}
-<h2>Carte Interactive des Signalements</h2>
-<div>
-    {{ map|safe }}
+<div class="container">
+    <h2>Carte Interactive des Signalements</h2>
+    <div>
+        {{ map|safe }}
+    </div>
 </div>
 {% endblock %}

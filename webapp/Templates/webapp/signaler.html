@@ -5,7 +5,7 @@
 <header>
     <h1>Signaler un problème</h1>
     <nav>
-        <ul>
+        <ul style="list-style:none; margin:0; padding:0; display:flex; justify-content:center; gap:18px;">
             <li><a href="{% url 'carte' %}">Carte</a></li>
             <li><a href="{% url 'classement' %}">Classement</a></li>
             <li><a href="{% url 'evenements' %}">Événements</a></li>
@@ -14,12 +14,14 @@
 </header>
 {% endblock %}
 {% block content %}
-{% if success %}
-    <div style="color: green;">Signalement envoyé avec succès !</div>
-{% endif %}
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Envoyer le signalement</button>
-</form>
+<div class="container">
+    {% if success %}
+        <div class="success-message">Signalement envoyé avec succès !</div>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Envoyer le signalement</button>
+    </form>
+</div>
 {% endblock %}

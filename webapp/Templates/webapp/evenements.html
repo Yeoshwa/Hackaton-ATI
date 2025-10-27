@@ -4,7 +4,7 @@
 <header>
     <h1>Liste des Événements</h1>
     <nav>
-        <ul>
+        <ul style="list-style:none; margin:0; padding:0; display:flex; justify-content:center; gap:18px;">
             <li><a href="{% url 'carte' %}">Carte</a></li>
             <li><a href="{% url 'signaler' %}">Signaler</a></li>
             <li><a href="{% url 'classement' %}">Classement</a></li>
@@ -13,22 +13,23 @@
 </header>
 {% endblock %}
 {% block content %}
-<a href="{% url 'creer_evenement' %}" class="btn btn-success">Ajouter un événement</a>
-<ul>
-    {% for event in events %}
-    <li>
-        <a href="{% url 'evenement_detail' event.id %}">{{ event.titre }}</a> - {{ event.date|date:'d/m/Y H:i' }} à {{ event.lieu }}
-        <a href="{% url 'modifier_evenement' event.id %}" class="btn btn-warning">Modifier</a>
-        <a href="{% url 'supprimer_evenement' event.id %}" class="btn btn-danger">Supprimer</a>
-    </li>
-    {% empty %}
-    <li>Aucun événement à venir.</li>
-    {% endfor %}
-</ul>
+<div class="container">
+    <a href="{% url 'creer_evenement' %}" class="btn btn-success">Ajouter un événement</a>
+    <div class="event-list">
+        {% for event in events %}
+        <div class="event-card">
+            <div class="event-info">
+                <a href="{% url 'evenement_detail' event.id %}" style="font-weight:600; color:var(--secondary); font-size:1.1em;">{{ event.titre }}</a>
+                <p>{{ event.date|date:'d/m/Y H:i' }} à {{ event.lieu }}</p>
+            </div>
+            <div style="margin-left:auto;">
+                <a href="{% url 'modifier_evenement' event.id %}" class="btn btn-warning">Modifier</a>
+                <a href="{% url 'supprimer_evenement' event.id %}" class="btn btn-danger">Supprimer</a>
+            </div>
+        </div>
+        {% empty %}
+        <p>Aucun événement à venir.</p>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
-<style>
-.btn { display:inline-block; margin-left:10px; padding:2px 8px; border-radius:4px; text-decoration:none; }
-.btn-success { background:#28a745; color:#fff; }
-.btn-warning { background:#ffc107; color:#222; }
-.btn-danger { background:#dc3545; color:#fff; }
-</style>

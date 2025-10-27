@@ -4,16 +4,18 @@
 <header>
     <h1>Supprimer le profil de {{ profil.user.username }}</h1>
     <nav>
-        <ul>
+        <ul style="list-style:none; margin:0; padding:0; display:flex; justify-content:center; gap:18px;">
             <li><a href="{% url 'classement' %}">Annuler</a></li>
         </ul>
     </nav>
 </header>
 {% endblock %}
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    <p>Êtes-vous sûr de vouloir supprimer ce profil utilisateur ?</p>
-    <button type="submit" style="background:#dc3545;color:#fff;">Supprimer</button>
-</form>
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        <p>Êtes-vous sûr de vouloir supprimer ce profil utilisateur ?</p>
+        <button type="submit" class="btn btn-danger">Supprimer</button>
+    </form>
+</div>
 {% endblock %}

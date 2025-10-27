@@ -4,16 +4,18 @@
 <header>
     <h1>Modifier le profil de {{ profil.user.username }}</h1>
     <nav>
-        <ul>
+        <ul style="list-style:none; margin:0; padding:0; display:flex; justify-content:center; gap:18px;">
             <li><a href="{% url 'classement' %}">Retour au classement</a></li>
         </ul>
     </nav>
 </header>
 {% endblock %}
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Enregistrer les modifications</button>
-</form>
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Enregistrer les modifications</button>
+    </form>
+</div>
 {% endblock %}
